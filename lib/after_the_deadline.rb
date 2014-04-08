@@ -8,6 +8,16 @@ def AfterTheDeadline(dictionary = nil, types = AfterTheDeadline::DEFAULT_IGNORE_
   nil
 end
 
+# dictionary and language are mutually exclusive
+def AfterTheDeadline(language = 'en', types = AfterTheDeadline::DEFAULT_IGNORE_TYPES, api_key)
+  AfterTheDeadline.set_ignore_types(types)
+  AfterTheDeadline.set_api_key(api_key)
+  # Only English, French, German, Spanish and Portuguese at this time
+  raise AfterTheDeadline::Exception.new ("Unsupported language #{language}. Supported languages are #{AfterTheDeadline::SUPPORTED_LANGUAGES}") unless AfterTheDeadline::SUPPORTED_LANGUAGES.include? language
+  AfterTheDeadline.set_language(language)
+  nil
+end
+
 class AfterTheDeadline
   BASE_URI = 'http://service.afterthedeadline.com'
   DEFAULT_IGNORE_TYPES = ['Bias Language', 'Cliches', 'Complex Expression', 'Diacritical Marks', 'Double Negatives', 'Hidden Verbs', 'Jargon Language', 'Passive voice', 'Phrases to Avoid', 'Redundant Expression']
